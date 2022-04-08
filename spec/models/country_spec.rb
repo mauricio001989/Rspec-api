@@ -1,14 +1,14 @@
 require 'rails_helper'
 
-describe User do
-  context 'when create a user' do
-    subject(:user) { build_stubbed(:user) }
+describe Country do
+  context 'when create a ' do
+    subject(:country) { build_stubbed(:country) }
 
     # == Attributes ===============================================================================
 
     # == Relationships ============================================================================
 
-    it { is_expected.to belong_to(:country) }
+    it { is_expected.to have_many :users }
 
     # == Validations ==============================================================================
 
