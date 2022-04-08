@@ -1,7 +1,7 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Examples:
-#
-#   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
-#   Character.create(name: 'Luke', movie: movies.first)
+byebug
+ActiveRecord::Base.transaction do
+  ['common', Rails.env].each do |environment|
+    seed_file = Rails.root.join(Rails.root, 'db', 'seeds', "#{environment}.rb")
+    require seed_file if File.exists?(seed_file)
+  end
+end

@@ -10,16 +10,26 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_03_05_132305) do
+ActiveRecord::Schema.define(version: 2022_03_17_001340) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "countries", primary_key: "code", id: :string, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_countries_on_name", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.string "name", null: false
     t.integer "likes"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "country_id"
+    t.index ["country_id"], name: "index_users_on_country_id"
   end
 
+  add_foreign_key "users", "countries", primary_key: "code"
 end
