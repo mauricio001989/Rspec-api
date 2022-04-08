@@ -1,4 +1,4 @@
-class User < ApplicationRecord
+class Country < ApplicationRecord
   # == Attributes =================================================================================
 
   # == Constants ==================================================================================
@@ -9,15 +9,18 @@ class User < ApplicationRecord
 
   # == Instance Methods ===========================================================================
 
+  self.primary_key = 'code'
+  self.implicit_order_column = 'created_at'
+
   # == Relationships ==============================================================================
 
-  belongs_to :country
+  has_many :users
 
   # == Scopes =====================================================================================
 
   # == Validations ================================================================================
 
-  validates :name, presence: true
+  validates :name, :code, presence: true, uniqueness: { case_sensitive: false }
 
   # == Raise errors  ==============================================================================
 end
