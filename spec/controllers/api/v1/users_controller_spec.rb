@@ -1,19 +1,17 @@
 require 'rails_helper'
 
 describe Api::V1::UsersController, type: :controller do
+  before { create_list(:user, 3) }
+
   # >> GET >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 
   describe "GET #index" do
     subject(:http_request) { get :index } #subject generico
 
-    before { create_list(:user, 3) } # global
-
     context 'when I get all the users' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
-      it 'responds with ok status' do
-        expect(response).to have_http_status(:ok)
-      end
+      include_examples 'when validate status 200 ok'
 
       it { expect(response_body.count).to eq(User.count) }
     end
@@ -22,24 +20,22 @@ describe Api::V1::UsersController, type: :controller do
   describe "GET #show" do
     subject(:http_request) { get :show, params: id }
 
-    before { create_list(:user, 3) } # global
-
     context 'when I see a user' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
       let(:id) { { id: User.last.id } }
 
-      it { expect(response).to have_http_status(:ok) }
+      include_examples 'when validate status 200 ok'
 
       it { expect(response_body['name']).to eq(User.find(id[:id]).name) }
     end
 
     context 'when the user is not present' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
       let(:id) { { id: -1 } }
 
-      it { expect(response).to have_http_status(:not_found) }
+      include_examples 'when validate status 404 record not found'
     end
   end
 
@@ -49,19 +45,19 @@ describe Api::V1::UsersController, type: :controller do
     subject(:http_request) { post :create, params: params_create }
 
     context 'when create a user' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
       let(:params_create) { { user: build(:user).as_json } }
 
-      it { expect(response).to have_http_status(:created) }
+      include_examples 'when validate status 201 create'
     end
 
     context 'when not create a user' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
       let(:params_create) { { user: build(:user, name: nil).as_json } }
 
-      it { expect(response).to have_http_status(:unprocessable_entity) }
+      include_examples 'when validate status 422 unprocessable_entity'
     end
   end
 
@@ -70,32 +66,30 @@ describe Api::V1::UsersController, type: :controller do
   describe "PUT #update" do
     subject(:http_request) { patch :update, params: { id: id, user: params_update } }
 
-    before { create_list(:user, 3) } # global
     let(:id) { User.last.id }
+    let(:params_update) { { name: 'update'} }
 
     context 'when update a user' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
-      let(:params_update) { { name: 'update'} }
 
-      it { expect(response).to have_http_status(:ok) }
+      include_examples 'when validate status 200 ok'
     end
 
     context 'when not update a user' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
       let(:params_update) { { name: nil} }
 
-      it { expect(response).to have_http_status(:unprocessable_entity) }
+      include_examples 'when validate status 422 unprocessable_entity'
     end
 
     context 'when the user is not present' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
-      let(:params_update) { { name: 'update'} }
       let(:id) { -1 }
 
-      it { expect(response).to have_http_status(:not_found) }
+      include_examples 'when validate status 404 record not found'
     end
   end
 
@@ -104,24 +98,22 @@ describe Api::V1::UsersController, type: :controller do
   describe "DELETE #destroy" do
     subject(:http_request) { delete :destroy, params: id }
 
-    before { create_list(:user, 3) } # global
-
     context 'when I remove a user' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
       let(:id) { { id: User.last.id } }
 
-      it { expect(response).to have_http_status(:no_content) }
+      include_examples 'when validate status 204 no content'
 
       it { expect(User.find_by(id: id)).to be_nil }
     end
 
     context 'when the user is not present' do
-      before { http_request } # recomendable
+      include_context 'when the current user is authenticated with language En'
 
       let(:id) { { id: -1 } }
 
-      it { expect(response).to have_http_status(:not_found) }
+      include_examples 'when validate status 404 record not found'
     end
   end
 end
