@@ -20,6 +20,10 @@ gem 'bootsnap', '>= 1.1.0', require: false
 # @see: { https://github.com/tzinfo/tzinfo-data }
 gem 'tzinfo-data'
 
+# versionist: A plugin for versioning Rails based RESTful APIs. Versionist.
+# see: { https://github.com/bploetz/versionist }
+gem 'versionist', '~> 2.0', '>= 2.0.1'
+
 group :development, :test do
   # byebug: A simple to use and feature rich debugger for Ruby.
   # @see: { https://github.com/deivid-rodriguez/byebug }
