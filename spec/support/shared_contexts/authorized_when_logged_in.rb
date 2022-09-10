@@ -11,6 +11,6 @@ shared_context 'when the current user is authenticated with language En' do
   end
 end
 
-shared_context 'when the current user is not authenticated' do
-  before { http_request }
-end
+# shared_context 'when the current user is not authenticated' do
+#   before { http_request }
+# end

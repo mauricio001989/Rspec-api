@@ -1,6 +1,7 @@
 # == 1xx Informational response ===================================================================
 
 # == 2xx Success response =========================================================================
+
 shared_examples 'when validate status 200 ok' do
   it 'responds with ok status' do
     expect(response).to have_http_status(:ok)
@@ -35,11 +36,11 @@ shared_examples 'when validate status 400 bad request' do
   end
 end
 
-shared_examples 'when validate status 401 unauthorized' do
-  it 'responds with unauthorized status' do
-    expect(response).to have_http_status(:unauthorized)
-  end
-end
+# shared_examples 'when validate status 401 unauthorized' do
+#   it 'responds with unauthorized status' do
+#     expect(response).to have_http_status(:unauthorized)
+#   end
+# end
 
 shared_examples 'when validate status 404 record not found' do
   it 'responds with not found status' do
